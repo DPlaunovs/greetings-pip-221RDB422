@@ -1,0 +1,25 @@
+name: Run Tests
+description: Run greeting tests for given environment
+inputs:
+  env_name:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout this repo
+      uses: actions/checkout@v4
+
+    - name: Clone course-js-api-framework repo
+      uses: actions/checkout@v4
+      with:
+        repository: mtararujs/course-js-api-framework
+        path: js-framework
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: js-framework
+
+    - name: Run greeting tests
+      run: npm run greetings greetings_${{ inputs.env_name }}
+      working-directory: js-framework
